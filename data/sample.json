@@ -1,0 +1,9 @@
+{
+  "event_id": "092103-009-sample-001",
+  "event_type": "PROFILE_REGISTERED",
+  "aggregate_type": "talent_profile",
+  "aggregate_id": "sojourn_creator_service-001",
+  "occurred_at": "2026-09-20T16:00:00+08:00",
+  "version": 1,
+  "summary": "旅创人才服务接续联调样例"
+}
