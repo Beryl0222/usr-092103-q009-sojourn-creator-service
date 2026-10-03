@@ -1,6 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "旅创人才服务接续领域事件",
+  "title": "旅创人才连续案件领域事件",
+  "description": "所有跨机构事件共享同一公共信封；事件的顺序、授权闸门与机构决定语义见 src/sequence.js。枚举值以 src/catalog.js 为单一事实源。",
   "type": "object",
   "required": [
     "event_id",
@@ -20,19 +21,54 @@
       "type": "string",
       "enum": [
         "PROFILE_REGISTERED",
+        "SKILL_INTENT_RECORDED",
+        "RESIDENCE_STAGE_CHANGED",
+        "PROJECT_PROPOSAL_SUBMITTED",
+        "SERVICE_CASE_OPENED",
         "SERVICE_MATCHED",
-        "REFERRAL_ACCEPTED",
+        "POLICY_ELIGIBILITY_DECIDED",
+        "DOCUMENT_DECLARED",
         "DOCUMENT_EXPIRED",
-        "CASE_COMPLETED"
+        "DOCUMENT_WITHDRAWN",
+        "CONSENT_GRANTED",
+        "CONSENT_REVOKED",
+        "REFERRAL_ISSUED",
+        "REFERRAL_ACCEPTED",
+        "REFERRAL_REJECTED",
+        "RECEIPT_ISSUED",
+        "TASK_ASSIGNED",
+        "TASK_DEADLINE_PROMISED",
+        "TASK_MATERIAL_REQUESTED",
+        "MATERIAL_SUBMITTED",
+        "PROJECT_SELECTION_DECIDED",
+        "REGISTRATION_DECIDED",
+        "LOAN_DECIDED",
+        "HANDLING_RESULT_RECORDED",
+        "CASE_STAGE_ADVANCED",
+        "CASE_COMPLETED",
+        "CASE_TRANSFER_REQUESTED",
+        "CASE_TRANSFER_EXPORTED",
+        "CASE_TRANSFER_IMPORTED",
+        "CASE_EXPORT_LOCKED"
       ]
     },
     "aggregate_type": {
       "type": "string",
       "enum": [
         "talent_profile",
+        "skill_intent",
+        "residence_stage",
+        "project_proposal",
         "service_case",
+        "policy_eligibility",
         "document_assertion",
-        "agency_receipt"
+        "consent_grant",
+        "agency_referral",
+        "agency_receipt",
+        "case_task",
+        "agency_decision",
+        "handling_result",
+        "case_transfer"
       ]
     },
     "aggregate_id": {
@@ -45,11 +81,55 @@
     },
     "version": {
       "type": "integer",
-      "minimum": 1
+      "minimum": 1,
+      "description": "同一 aggregate_id 内严格单调递增，用于乐观并发与回放。"
     },
     "summary": {
       "type": "string",
       "minLength": 1
+    },
+    "case_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "连续案件标识；立案之后的所有事件必须携带。"
+    },
+    "person_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "申请人（旅居创业者）稳定标识。"
+    },
+    "actor": {
+      "type": "object",
+      "description": "事件实际触发方。规则引擎只能作为 SERVICE_MATCHED 的 actor_kind=rule_engine；机构决定必须为 responsible_agency。",
+      "required": ["actor_kind"],
+      "properties": {
+        "actor_kind": {
+          "type": "string",
+          "enum": ["applicant", "window_staff", "responsible_agency", "rule_engine", "system"]
+        },
+        "agency_id": {
+          "type": "string"
+        },
+        "staff_id": {
+          "type": "string"
+        }
+      }
+    },
+    "case_stage": {
+      "type": "string",
+      "enum": [
+        "talent_registry",
+        "project_cooperation",
+        "business_registration",
+        "social_insurance",
+        "employment",
+        "loan",
+        "legal_consulting"
+      ]
+    },
+    "payload": {
+      "type": "object",
+      "description": "事件专属数据。常见键：document_id、consent_id、purpose、recipient_agency、valid_until、referral_id、task_id、assignee_id、promised_deadline、missing_materials、eligibility_code、outcome、decision_agency、selected_documents、destination_city、retention_until。"
     }
   },
   "additionalProperties": true
