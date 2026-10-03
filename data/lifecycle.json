@@ -1,0 +1,981 @@
+[
+  {
+    "event_id": "EVT-001",
+    "event_type": "PROFILE_REGISTERED",
+    "aggregate_type": "talent_profile",
+    "aggregate_id": "P-0901",
+    "occurred_at": "2026-09-02T09:30:00+08:00",
+    "version": 1,
+    "summary": "旅居创业者林某到人才库登记，意向来大理创业",
+    "person_id": "P-0901",
+    "payload": {
+      "person_id": "P-0901",
+      "skills": ["民宿运营", "白族扎染手作"],
+      "residence_stage": "INTENDED"
+    }
+  },
+  {
+    "event_id": "EVT-002",
+    "event_type": "SKILLS_INTENT_UPDATED",
+    "aggregate_type": "talent_profile",
+    "aggregate_id": "P-0901",
+    "occurred_at": "2026-09-02T09:35:00+08:00",
+    "version": 2,
+    "summary": "补充技能意向：非遗主题民宿与体验工坊",
+    "person_id": "P-0901",
+    "payload": {
+      "skills": ["民宿运营", "白族扎染手作", "体验活动策划"],
+      "intent": "开办非遗主题民宿并开展旅创项目合作"
+    }
+  },
+  {
+    "event_id": "EVT-003",
+    "event_type": "RESIDENCE_STAGE_CHANGED",
+    "aggregate_type": "talent_profile",
+    "aggregate_id": "P-0901",
+    "occurred_at": "2026-09-02T14:00:00+08:00",
+    "version": 3,
+    "summary": "申请人已抵达大理，进入暂住阶段",
+    "person_id": "P-0901",
+    "payload": {
+      "from_stage": "INTENDED",
+      "to_stage": "TEMP_RESIDENCE",
+      "city": "大理"
+    }
+  },
+  {
+    "event_id": "EVT-010",
+    "event_type": "CASE_OPENED",
+    "aggregate_type": "service_case",
+    "aggregate_id": "CASE-2026-0901",
+    "occurred_at": "2026-09-03T10:00:00+08:00",
+    "version": 1,
+    "summary": "文旅窗口开立连续案件，串联从项目合作到开业的全部事项",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "person_id": "P-0901",
+      "service_items": [
+        "PROJECT_COLLABORATION",
+        "BUSINESS_REGISTRATION",
+        "SOCIAL_INSURANCE",
+        "EMPLOYMENT",
+        "LOAN",
+        "LEGAL_CONSULTATION"
+      ],
+      "opened_by": "CULTURE_TOURISM"
+    }
+  },
+  {
+    "event_id": "EVT-020",
+    "event_type": "DOCUMENT_DECLARED",
+    "aggregate_type": "document_assertion",
+    "aggregate_id": "D-RESIDENCE",
+    "occurred_at": "2026-09-03T10:10:00+08:00",
+    "version": 1,
+    "summary": "申请人提交暂住登记证明（有效期至 2026-10-01）",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "document_id": "D-RESIDENCE",
+      "doc_type": "暂住登记证明",
+      "issued_by": "大理市公安局",
+      "valid_from": "2026-09-02T00:00:00+08:00",
+      "valid_until": "2026-10-01T23:59:59+08:00",
+      "declarations": ["在大理市辖区内暂住"]
+    }
+  },
+  {
+    "event_id": "EVT-021",
+    "event_type": "CONSENT_GRANTED",
+    "aggregate_type": "consent_grant",
+    "aggregate_id": "C-1",
+    "occurred_at": "2026-09-03T10:12:00+08:00",
+    "version": 1,
+    "summary": "本人授权暂住证明在遴选、注册、社保、贷款用途内限期复用",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "consent_id": "C-1",
+      "document_id": "D-RESIDENCE",
+      "purposes": ["PROJECT_SELECTION", "BUSINESS_REGISTRATION", "SOCIAL_INSURANCE", "LOAN"],
+      "granted_at": "2026-09-03T10:12:00+08:00",
+      "expires_at": "2026-10-01T23:59:59+08:00"
+    }
+  },
+  {
+    "event_id": "EVT-022",
+    "event_type": "DOCUMENT_DECLARED",
+    "aggregate_type": "document_assertion",
+    "aggregate_id": "D-ID",
+    "occurred_at": "2026-09-03T10:15:00+08:00",
+    "version": 1,
+    "summary": "申请人提交身份证明",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "document_id": "D-ID",
+      "doc_type": "居民身份证",
+      "issued_by": "户籍所在地公安机关",
+      "declarations": ["身份信息真实"]
+    }
+  },
+  {
+    "event_id": "EVT-023",
+    "event_type": "CONSENT_GRANTED",
+    "aggregate_type": "consent_grant",
+    "aggregate_id": "C-2",
+    "occurred_at": "2026-09-03T10:17:00+08:00",
+    "version": 1,
+    "summary": "本人授权身份证明在注册、用工、法律援助用途内复用",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "consent_id": "C-2",
+      "document_id": "D-ID",
+      "purposes": ["BUSINESS_REGISTRATION", "EMPLOYMENT", "LEGAL_AID"],
+      "granted_at": "2026-09-03T10:17:00+08:00"
+    }
+  },
+  {
+    "event_id": "EVT-030",
+    "event_type": "PROJECT_PROPOSAL_SUBMITTED",
+    "aggregate_type": "project_proposal",
+    "aggregate_id": "PP-1",
+    "occurred_at": "2026-09-04T11:00:00+08:00",
+    "version": 1,
+    "summary": "提交旅创项目提案：洱海非遗主题民宿与扎染工坊",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "proposal_id": "PP-1",
+      "title": "洱海非遗主题民宿与扎染体验工坊",
+      "outline": "改造院落 6 间客房，配套白族扎染体验与本地就业岗位 4 个"
+    }
+  },
+  {
+    "event_id": "EVT-031",
+    "event_type": "POLICY_HINTED",
+    "aggregate_type": "policy_eligibility",
+    "aggregate_id": "PE-1",
+    "occurred_at": "2026-09-04T11:20:00+08:00",
+    "version": 1,
+    "summary": "规则匹配提示可能适用旅创人才创业扶持与贴息贷款政策（仅供参考）",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "policy_code": "PC-LVCHUANG-2026",
+      "matched_basis": ["技能标签命中非遗手作", "居住阶段为暂住", "提案含本地就业岗位"],
+      "suggested_service_items": ["LOAN", "BUSINESS_REGISTRATION"],
+      "note": "本提示不构成资格认定或授信承诺"
+    }
+  },
+  {
+    "event_id": "EVT-032",
+    "event_type": "ELIGIBILITY_CONFIRMED",
+    "aggregate_type": "policy_eligibility",
+    "aggregate_id": "PE-1",
+    "occurred_at": "2026-09-05T16:00:00+08:00",
+    "version": 2,
+    "summary": "文旅与人社部门联合审核，确认旅创扶持资格（责任机构认定）",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "policy_code": "PC-LVCHUANG-2026",
+      "agency": "HUMAN_RESOURCES",
+      "valid_from": "2026-09-05T16:00:00+08:00",
+      "valid_until": "2026-12-31T23:59:59+08:00"
+    }
+  },
+  {
+    "event_id": "EVT-033",
+    "event_type": "DOCUMENT_SHARED",
+    "aggregate_type": "document_assertion",
+    "aggregate_id": "D-RESIDENCE",
+    "occurred_at": "2026-09-06T09:00:00+08:00",
+    "version": 2,
+    "summary": "暂住证明按遴选用途复用于项目评审，无需重复提交",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "document_id": "D-RESIDENCE",
+      "consent_id": "C-1",
+      "purpose": "PROJECT_SELECTION",
+      "target_agency": "CULTURE_TOURISM",
+      "task_id": "T-SEL"
+    }
+  },
+  {
+    "event_id": "EVT-034",
+    "event_type": "PROJECT_SELECTION_DECIDED",
+    "aggregate_type": "project_proposal",
+    "aggregate_id": "PP-1",
+    "occurred_at": "2026-09-07T15:00:00+08:00",
+    "version": 2,
+    "summary": "文旅部门组织评审后决定入选旅创项目库（机构决定，非规则自动入选）",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "proposal_id": "PP-1",
+      "agency": "CULTURE_TOURISM",
+      "decision": "SELECTED",
+      "reason": "方案具备在地文化特色与就业带动作用"
+    }
+  },
+  {
+    "event_id": "EVT-040",
+    "event_type": "REFERRAL_ISSUED",
+    "aggregate_type": "agency_receipt",
+    "aggregate_id": "R-1",
+    "occurred_at": "2026-09-08T09:00:00+08:00",
+    "version": 1,
+    "summary": "文旅窗口转介市场监管部门办理经营主体注册",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "referral_id": "R-1",
+      "from_agency": "CULTURE_TOURISM",
+      "to_agency": "MARKET_REGULATION",
+      "service_item": "BUSINESS_REGISTRATION",
+      "reason": "项目已入选，申请人申请设立个体工商户",
+      "expected_response_days": 3
+    }
+  },
+  {
+    "event_id": "EVT-041",
+    "event_type": "REFERRAL_ACCEPTED",
+    "aggregate_type": "agency_receipt",
+    "aggregate_id": "R-1",
+    "occurred_at": "2026-09-08T10:30:00+08:00",
+    "version": 2,
+    "summary": "市场监管部门接收转介",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": { "referral_id": "R-1" }
+  },
+  {
+    "event_id": "EVT-042",
+    "event_type": "TASK_ASSIGNED",
+    "aggregate_type": "service_task",
+    "aggregate_id": "T-REG",
+    "occurred_at": "2026-09-08T11:00:00+08:00",
+    "version": 1,
+    "summary": "注册事项分派至窗口经办人，承诺 7 个工作日内办结",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "task_id": "T-REG",
+      "service_item": "BUSINESS_REGISTRATION",
+      "agency": "MARKET_REGULATION",
+      "assignee": "周某（登记注册窗口）",
+      "sla_due_at": "2026-09-15T18:00:00+08:00",
+      "referral_id": "R-1"
+    }
+  },
+  {
+    "event_id": "EVT-043",
+    "event_type": "DOCUMENT_SHARED",
+    "aggregate_type": "document_assertion",
+    "aggregate_id": "D-RESIDENCE",
+    "occurred_at": "2026-09-08T11:05:00+08:00",
+    "version": 3,
+    "summary": "暂住证明按注册用途复用至市场监管部门",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "document_id": "D-RESIDENCE",
+      "consent_id": "C-1",
+      "purpose": "BUSINESS_REGISTRATION",
+      "target_agency": "MARKET_REGULATION",
+      "task_id": "T-REG"
+    }
+  },
+  {
+    "event_id": "EVT-044",
+    "event_type": "DOCUMENT_SHARED",
+    "aggregate_type": "document_assertion",
+    "aggregate_id": "D-ID",
+    "occurred_at": "2026-09-08T11:06:00+08:00",
+    "version": 2,
+    "summary": "身份证明按注册用途复用，申请人不再重复交表",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "document_id": "D-ID",
+      "consent_id": "C-2",
+      "purpose": "BUSINESS_REGISTRATION",
+      "target_agency": "MARKET_REGULATION",
+      "task_id": "T-REG"
+    }
+  },
+  {
+    "event_id": "EVT-045",
+    "event_type": "REGISTRATION_DECIDED",
+    "aggregate_type": "service_task",
+    "aggregate_id": "T-REG",
+    "occurred_at": "2026-09-09T16:00:00+08:00",
+    "version": 2,
+    "summary": "市场监管部门核准个体工商户设立登记（责任机构决定）",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "agency": "MARKET_REGULATION",
+      "decision": "GRANTED",
+      "entity_name": "大理市林某扎染民宿经营部",
+      "registration_no": "92532901MA6XXXXXX"
+    }
+  },
+  {
+    "event_id": "EVT-046",
+    "event_type": "TASK_STAGE_CHANGED",
+    "aggregate_type": "service_task",
+    "aggregate_id": "T-REG",
+    "occurred_at": "2026-09-09T16:05:00+08:00",
+    "version": 3,
+    "summary": "注册事项办结",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": { "task_id": "T-REG", "status": "DONE", "note": "营业执照已核发" }
+  },
+  {
+    "event_id": "EVT-047",
+    "event_type": "REFERRAL_CLOSED_LOOP",
+    "aggregate_type": "agency_receipt",
+    "aggregate_id": "R-1",
+    "occurred_at": "2026-09-09T17:00:00+08:00",
+    "version": 3,
+    "summary": "注册回执回到文旅主理窗口，转介闭环",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": { "referral_id": "R-1", "result": "个体工商户营业执照已核发" }
+  },
+  {
+    "event_id": "EVT-050",
+    "event_type": "REFERRAL_ISSUED",
+    "aggregate_type": "agency_receipt",
+    "aggregate_id": "R-2",
+    "occurred_at": "2026-09-10T09:00:00+08:00",
+    "version": 1,
+    "summary": "转介人社部门办理社保参保登记",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "referral_id": "R-2",
+      "from_agency": "CULTURE_TOURISM",
+      "to_agency": "HUMAN_RESOURCES",
+      "service_item": "SOCIAL_INSURANCE",
+      "expected_response_days": 2
+    }
+  },
+  {
+    "event_id": "EVT-051",
+    "event_type": "REFERRAL_ACCEPTED",
+    "aggregate_type": "agency_receipt",
+    "aggregate_id": "R-2",
+    "occurred_at": "2026-09-10T10:00:00+08:00",
+    "version": 2,
+    "summary": "人社部门接收转介",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": { "referral_id": "R-2" }
+  },
+  {
+    "event_id": "EVT-052",
+    "event_type": "TASK_ASSIGNED",
+    "aggregate_type": "service_task",
+    "aggregate_id": "T-SI",
+    "occurred_at": "2026-09-10T10:30:00+08:00",
+    "version": 1,
+    "summary": "社保事项分派，承诺 5 个工作日办结",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "task_id": "T-SI",
+      "service_item": "SOCIAL_INSURANCE",
+      "agency": "HUMAN_RESOURCES",
+      "assignee": "李某（社保窗口）",
+      "sla_due_at": "2026-09-17T18:00:00+08:00",
+      "referral_id": "R-2"
+    }
+  },
+  {
+    "event_id": "EVT-053",
+    "event_type": "DOCUMENT_SHARED",
+    "aggregate_type": "document_assertion",
+    "aggregate_id": "D-RESIDENCE",
+    "occurred_at": "2026-09-10T10:35:00+08:00",
+    "version": 4,
+    "summary": "暂住证明按社保用途复用",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "document_id": "D-RESIDENCE",
+      "consent_id": "C-1",
+      "purpose": "SOCIAL_INSURANCE",
+      "target_agency": "HUMAN_RESOURCES",
+      "task_id": "T-SI"
+    }
+  },
+  {
+    "event_id": "EVT-054",
+    "event_type": "TASK_STAGE_CHANGED",
+    "aggregate_type": "service_task",
+    "aggregate_id": "T-SI",
+    "occurred_at": "2026-09-12T15:00:00+08:00",
+    "version": 2,
+    "summary": "社保参保登记办结",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": { "task_id": "T-SI", "status": "DONE", "note": "灵活就业人员参保登记完成" }
+  },
+  {
+    "event_id": "EVT-055",
+    "event_type": "REFERRAL_CLOSED_LOOP",
+    "aggregate_type": "agency_receipt",
+    "aggregate_id": "R-2",
+    "occurred_at": "2026-09-12T16:00:00+08:00",
+    "version": 3,
+    "summary": "社保办理结果回执闭环",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": { "referral_id": "R-2", "result": "社保参保登记完成" }
+  },
+  {
+    "event_id": "EVT-060",
+    "event_type": "REFERRAL_ISSUED",
+    "aggregate_type": "agency_receipt",
+    "aggregate_id": "R-3",
+    "occurred_at": "2026-09-13T09:00:00+08:00",
+    "version": 1,
+    "summary": "转介人社部门办理用工备案（雇佣本地店员）",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "referral_id": "R-3",
+      "from_agency": "CULTURE_TOURISM",
+      "to_agency": "HUMAN_RESOURCES",
+      "service_item": "EMPLOYMENT",
+      "expected_response_days": 2
+    }
+  },
+  {
+    "event_id": "EVT-061",
+    "event_type": "REFERRAL_ACCEPTED",
+    "aggregate_type": "agency_receipt",
+    "aggregate_id": "R-3",
+    "occurred_at": "2026-09-13T10:00:00+08:00",
+    "version": 2,
+    "summary": "人社部门接收用工备案",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": { "referral_id": "R-3" }
+  },
+  {
+    "event_id": "EVT-062",
+    "event_type": "TASK_ASSIGNED",
+    "aggregate_type": "service_task",
+    "aggregate_id": "T-EMP",
+    "occurred_at": "2026-09-13T10:30:00+08:00",
+    "version": 1,
+    "summary": "用工备案事项分派",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "task_id": "T-EMP",
+      "service_item": "EMPLOYMENT",
+      "agency": "HUMAN_RESOURCES",
+      "assignee": "赵某（劳动用工窗口）",
+      "sla_due_at": "2026-09-20T18:00:00+08:00",
+      "referral_id": "R-3"
+    }
+  },
+  {
+    "event_id": "EVT-063",
+    "event_type": "SUPPLEMENT_REQUESTED",
+    "aggregate_type": "service_task",
+    "aggregate_id": "T-EMP",
+    "occurred_at": "2026-09-13T11:00:00+08:00",
+    "version": 2,
+    "summary": "尚缺用工材料：身份证明与劳动合同",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "task_id": "T-EMP",
+      "missing_items": ["经营者身份证明", "劳动合同"],
+      "due_at": "2026-09-19T18:00:00+08:00"
+    }
+  },
+  {
+    "event_id": "EVT-064",
+    "event_type": "DOCUMENT_SHARED",
+    "aggregate_type": "document_assertion",
+    "aggregate_id": "D-ID",
+    "occurred_at": "2026-09-14T09:00:00+08:00",
+    "version": 3,
+    "summary": "身份证明按用工用途复用，系统自动带入，无需再交复印件",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "document_id": "D-ID",
+      "consent_id": "C-2",
+      "purpose": "EMPLOYMENT",
+      "target_agency": "HUMAN_RESOURCES",
+      "task_id": "T-EMP"
+    }
+  },
+  {
+    "event_id": "EVT-065",
+    "event_type": "SUPPLEMENT_RECEIVED",
+    "aggregate_type": "service_task",
+    "aggregate_id": "T-EMP",
+    "occurred_at": "2026-09-14T15:00:00+08:00",
+    "version": 3,
+    "summary": "材料补齐：身份证明由授权复用带入，劳动合同由申请人上传",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "task_id": "T-EMP",
+      "items": ["经营者身份证明（按授权复用）", "劳动合同"]
+    }
+  },
+  {
+    "event_id": "EVT-066",
+    "event_type": "TASK_STAGE_CHANGED",
+    "aggregate_type": "service_task",
+    "aggregate_id": "T-EMP",
+    "occurred_at": "2026-09-15T11:00:00+08:00",
+    "version": 4,
+    "summary": "用工备案办结",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": { "task_id": "T-EMP", "status": "DONE", "note": "用工备案完成" }
+  },
+  {
+    "event_id": "EVT-067",
+    "event_type": "REFERRAL_CLOSED_LOOP",
+    "aggregate_type": "agency_receipt",
+    "aggregate_id": "R-3",
+    "occurred_at": "2026-09-15T14:00:00+08:00",
+    "version": 3,
+    "summary": "用工备案回执闭环",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": { "referral_id": "R-3", "result": "用工备案完成" }
+  },
+  {
+    "event_id": "EVT-070",
+    "event_type": "REFERRAL_ISSUED",
+    "aggregate_type": "agency_receipt",
+    "aggregate_id": "R-4",
+    "occurred_at": "2026-09-18T09:00:00+08:00",
+    "version": 1,
+    "summary": "转介合作银行办理旅创贴息贷款",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "referral_id": "R-4",
+      "from_agency": "CULTURE_TOURISM",
+      "to_agency": "RURAL_BANK",
+      "service_item": "LOAN",
+      "reason": "凭旅创扶持资格申请创业担保贷款",
+      "expected_response_days": 5
+    }
+  },
+  {
+    "event_id": "EVT-071",
+    "event_type": "REFERRAL_ACCEPTED",
+    "aggregate_type": "agency_receipt",
+    "aggregate_id": "R-4",
+    "occurred_at": "2026-09-19T09:00:00+08:00",
+    "version": 2,
+    "summary": "银行接收贷款转介",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": { "referral_id": "R-4" }
+  },
+  {
+    "event_id": "EVT-072",
+    "event_type": "TASK_ASSIGNED",
+    "aggregate_type": "service_task",
+    "aggregate_id": "T-LOAN",
+    "occurred_at": "2026-09-19T10:00:00+08:00",
+    "version": 1,
+    "summary": "贷款审批事项分派，承诺 20 个工作日内答复",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "task_id": "T-LOAN",
+      "service_item": "LOAN",
+      "agency": "RURAL_BANK",
+      "assignee": "钱某（信贷经理）",
+      "sla_due_at": "2026-10-20T18:00:00+08:00",
+      "referral_id": "R-4"
+    }
+  },
+  {
+    "event_id": "EVT-073",
+    "event_type": "DOCUMENT_EXPIRED",
+    "aggregate_type": "document_assertion",
+    "aggregate_id": "D-RESIDENCE",
+    "occurred_at": "2026-10-01T23:59:59+08:00",
+    "version": 5,
+    "summary": "暂住登记证明到期；系统通知贷款环节不得再据此办理",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "document_id": "D-RESIDENCE"
+    }
+  },
+  {
+    "event_id": "EVT-074",
+    "event_type": "DOCUMENT_USE_BLOCKED",
+    "aggregate_type": "document_assertion",
+    "aggregate_id": "D-RESIDENCE",
+    "occurred_at": "2026-10-02T09:00:00+08:00",
+    "version": 6,
+    "summary": "贷款审批尝试调用暂住证明被拦截：已过期，新办理立即停止",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "document_id": "D-RESIDENCE",
+      "attempted_task_id": "T-LOAN",
+      "attempted_purpose": "LOAN",
+      "reason": "EXPIRED"
+    }
+  },
+  {
+    "event_id": "EVT-075",
+    "event_type": "TASK_STAGE_CHANGED",
+    "aggregate_type": "service_task",
+    "aggregate_id": "T-LOAN",
+    "occurred_at": "2026-10-02T09:05:00+08:00",
+    "version": 2,
+    "summary": "贷款事项挂起，等待有效居住证明",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "task_id": "T-LOAN",
+      "status": "SUSPENDED",
+      "missing_items": ["有效居住证明"],
+      "note": "原暂住证明已过期"
+    }
+  },
+  {
+    "event_id": "EVT-076",
+    "event_type": "SUPPLEMENT_REQUESTED",
+    "aggregate_type": "service_task",
+    "aggregate_id": "T-LOAN",
+    "occurred_at": "2026-10-02T09:10:00+08:00",
+    "version": 3,
+    "summary": "通知申请人补办居住证明，过期事项主动推送下一环节",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "task_id": "T-LOAN",
+      "missing_items": ["有效居住证明"],
+      "due_at": "2026-10-15T18:00:00+08:00"
+    }
+  },
+  {
+    "event_id": "EVT-077",
+    "event_type": "DOCUMENT_DECLARED",
+    "aggregate_type": "document_assertion",
+    "aggregate_id": "D-RESIDENCE-2",
+    "occurred_at": "2026-10-02T15:00:00+08:00",
+    "version": 1,
+    "summary": "申请人换领新的暂住登记证明",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "document_id": "D-RESIDENCE-2",
+      "doc_type": "暂住登记证明",
+      "issued_by": "大理市公安局",
+      "valid_from": "2026-10-02T00:00:00+08:00",
+      "valid_until": "2027-04-01T23:59:59+08:00"
+    }
+  },
+  {
+    "event_id": "EVT-078",
+    "event_type": "CONSENT_GRANTED",
+    "aggregate_type": "consent_grant",
+    "aggregate_id": "C-3",
+    "occurred_at": "2026-10-02T15:05:00+08:00",
+    "version": 1,
+    "summary": "本人就新居住证明重新授权贷款用途（旧授权不自动延续）",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "consent_id": "C-3",
+      "document_id": "D-RESIDENCE-2",
+      "purposes": ["LOAN"],
+      "granted_at": "2026-10-02T15:05:00+08:00",
+      "expires_at": "2027-04-01T23:59:59+08:00"
+    }
+  },
+  {
+    "event_id": "EVT-079",
+    "event_type": "DOCUMENT_SHARED",
+    "aggregate_type": "document_assertion",
+    "aggregate_id": "D-RESIDENCE-2",
+    "occurred_at": "2026-10-03T09:00:00+08:00",
+    "version": 2,
+    "summary": "新居住证明按贷款用途复用至银行，阻断解除",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "document_id": "D-RESIDENCE-2",
+      "consent_id": "C-3",
+      "purpose": "LOAN",
+      "target_agency": "RURAL_BANK",
+      "task_id": "T-LOAN"
+    }
+  },
+  {
+    "event_id": "EVT-080",
+    "event_type": "SUPPLEMENT_RECEIVED",
+    "aggregate_type": "service_task",
+    "aggregate_id": "T-LOAN",
+    "occurred_at": "2026-10-03T09:05:00+08:00",
+    "version": 4,
+    "summary": "有效居住证明已补齐",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": { "task_id": "T-LOAN", "items": ["有效居住证明（按授权复用）"] }
+  },
+  {
+    "event_id": "EVT-081",
+    "event_type": "TASK_STAGE_CHANGED",
+    "aggregate_type": "service_task",
+    "aggregate_id": "T-LOAN",
+    "occurred_at": "2026-10-03T09:10:00+08:00",
+    "version": 5,
+    "summary": "贷款事项恢复审批",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": { "task_id": "T-LOAN", "status": "IN_PROGRESS", "note": "阻断解除，恢复审批" }
+  },
+  {
+    "event_id": "EVT-082",
+    "event_type": "LOAN_DECIDED",
+    "aggregate_type": "service_task",
+    "aggregate_id": "T-LOAN",
+    "occurred_at": "2026-10-03T14:00:00+08:00",
+    "version": 6,
+    "summary": "银行审批通过创业担保贷款 30 万元（授信由银行自主决定）",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "agency": "RURAL_BANK",
+      "decision": "APPROVED",
+      "amount": 300000,
+      "reason": "资格有效、材料齐备，按创业担保贷款政策授信"
+    }
+  },
+  {
+    "event_id": "EVT-083",
+    "event_type": "TASK_STAGE_CHANGED",
+    "aggregate_type": "service_task",
+    "aggregate_id": "T-LOAN",
+    "occurred_at": "2026-10-03T14:10:00+08:00",
+    "version": 7,
+    "summary": "贷款事项办结",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": { "task_id": "T-LOAN", "status": "DONE", "note": "贷款合同已签订" }
+  },
+  {
+    "event_id": "EVT-084",
+    "event_type": "REFERRAL_CLOSED_LOOP",
+    "aggregate_type": "agency_receipt",
+    "aggregate_id": "R-4",
+    "occurred_at": "2026-10-03T15:00:00+08:00",
+    "version": 3,
+    "summary": "贷款结果回执回到主理窗口，转介闭环",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": { "referral_id": "R-4", "result": "创业担保贷款 30 万元已授信" }
+  },
+  {
+    "event_id": "EVT-090",
+    "event_type": "REFERRAL_ISSUED",
+    "aggregate_type": "agency_receipt",
+    "aggregate_id": "R-5",
+    "occurred_at": "2026-09-21T09:00:00+08:00",
+    "version": 1,
+    "summary": "转介法律援助中心提供开业前法律咨询",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "referral_id": "R-5",
+      "from_agency": "CULTURE_TOURISM",
+      "to_agency": "LEGAL_AID_CENTER",
+      "service_item": "LEGAL_CONSULTATION",
+      "expected_response_days": 3
+    }
+  },
+  {
+    "event_id": "EVT-091",
+    "event_type": "REFERRAL_ACCEPTED",
+    "aggregate_type": "agency_receipt",
+    "aggregate_id": "R-5",
+    "occurred_at": "2026-09-21T10:00:00+08:00",
+    "version": 2,
+    "summary": "法律援助中心接收转介",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": { "referral_id": "R-5" }
+  },
+  {
+    "event_id": "EVT-092",
+    "event_type": "TASK_ASSIGNED",
+    "aggregate_type": "service_task",
+    "aggregate_id": "T-LEGAL",
+    "occurred_at": "2026-09-21T10:30:00+08:00",
+    "version": 1,
+    "summary": "法律咨询事项分派",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "task_id": "T-LEGAL",
+      "service_item": "LEGAL_CONSULTATION",
+      "agency": "LEGAL_AID_CENTER",
+      "assignee": "孙律师",
+      "sla_due_at": "2026-09-28T18:00:00+08:00",
+      "referral_id": "R-5"
+    }
+  },
+  {
+    "event_id": "EVT-093",
+    "event_type": "DOCUMENT_SHARED",
+    "aggregate_type": "document_assertion",
+    "aggregate_id": "D-ID",
+    "occurred_at": "2026-09-21T10:35:00+08:00",
+    "version": 4,
+    "summary": "身份证明按法律援助用途复用",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "document_id": "D-ID",
+      "consent_id": "C-2",
+      "purpose": "LEGAL_AID",
+      "target_agency": "LEGAL_AID_CENTER",
+      "task_id": "T-LEGAL"
+    }
+  },
+  {
+    "event_id": "EVT-094",
+    "event_type": "LEGAL_OPINION_ISSUED",
+    "aggregate_type": "service_task",
+    "aggregate_id": "T-LEGAL",
+    "occurred_at": "2026-09-24T16:00:00+08:00",
+    "version": 2,
+    "summary": "出具客房租赁与用工合同法律意见",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "opinion_id": "LO-0901",
+      "agency": "LEGAL_AID_CENTER",
+      "summary": "院落租赁合同需明确转租条款；劳动合同应约定工时与工伤责任"
+    }
+  },
+  {
+    "event_id": "EVT-095",
+    "event_type": "TASK_STAGE_CHANGED",
+    "aggregate_type": "service_task",
+    "aggregate_id": "T-LEGAL",
+    "occurred_at": "2026-09-24T16:10:00+08:00",
+    "version": 3,
+    "summary": "法律咨询办结",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": { "task_id": "T-LEGAL", "status": "DONE" }
+  },
+  {
+    "event_id": "EVT-096",
+    "event_type": "REFERRAL_CLOSED_LOOP",
+    "aggregate_type": "agency_receipt",
+    "aggregate_id": "R-5",
+    "occurred_at": "2026-09-24T17:00:00+08:00",
+    "version": 3,
+    "summary": "法律咨询回执闭环",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": { "referral_id": "R-5", "result": "法律意见书已出具" }
+  },
+  {
+    "event_id": "EVT-100",
+    "event_type": "CASE_COMPLETED",
+    "aggregate_type": "service_case",
+    "aggregate_id": "CASE-2026-0901",
+    "occurred_at": "2026-10-03T16:00:00+08:00",
+    "version": 2,
+    "summary": "全部事项办结，申请人正式开业",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "outcomes": ["项目入选旅创项目库", "个体工商户登记", "社保参保", "用工备案", "创业贷款 30 万元", "法律意见"]
+    }
+  },
+  {
+    "event_id": "EVT-110",
+    "event_type": "RESIDENCE_STAGE_CHANGED",
+    "aggregate_type": "talent_profile",
+    "aggregate_id": "P-0901",
+    "occurred_at": "2026-10-03T16:30:00+08:00",
+    "version": 4,
+    "summary": "申请人决定迁往成都经营，居住阶段变更为迁居",
+    "person_id": "P-0901",
+    "payload": {
+      "from_stage": "TEMP_RESIDENCE",
+      "to_stage": "RELOCATING",
+      "city": "成都"
+    }
+  },
+  {
+    "event_id": "EVT-111",
+    "event_type": "PROFILING_CONSENT_UPDATED",
+    "aggregate_type": "talent_profile",
+    "aggregate_id": "P-0901",
+    "occurred_at": "2026-10-03T16:35:00+08:00",
+    "version": 5,
+    "summary": "本人明确不同意将个人画像用于招商筛选",
+    "person_id": "P-0901",
+    "payload": {
+      "investment_screening_allowed": false,
+      "note": "档案仅限本人办理事项使用"
+    }
+  },
+  {
+    "event_id": "EVT-112",
+    "event_type": "CASE_EXPORT_REQUESTED",
+    "aggregate_type": "case_transfer",
+    "aggregate_id": "XFER-1",
+    "occurred_at": "2026-10-03T17:00:00+08:00",
+    "version": 1,
+    "summary": "本人勾选随案迁往成都的资料：人才档案、项目提案、材料声明",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "destination_city": "成都",
+      "selected_aggregates": ["talent_profile", "project_proposal", "document_assertion"]
+    }
+  },
+  {
+    "event_id": "EVT-113",
+    "event_type": "CASE_EXPORTED",
+    "aggregate_type": "case_transfer",
+    "aggregate_id": "XFER-1",
+    "occurred_at": "2026-10-03T17:20:00+08:00",
+    "version": 2,
+    "summary": "按本人勾选范围导出至成都；原机构仅保留必要审计记录至 2031 年",
+    "case_id": "CASE-2026-0901",
+    "person_id": "P-0901",
+    "payload": {
+      "export_id": "EXP-2026-1003-01",
+      "destination_city": "成都",
+      "included_aggregates": ["talent_profile", "project_proposal", "document_assertion"],
+      "excluded_aggregates": ["policy_eligibility", "agency_receipt"],
+      "audit_retention_until": "2031-10-03T23:59:59+08:00"
+    }
+  }
+]

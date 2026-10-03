@@ -5,5 +5,11 @@
   "aggregate_id": "sojourn_creator_service-001",
   "occurred_at": "2026-09-20T16:00:00+08:00",
   "version": 1,
-  "summary": "旅创人才服务接续联调样例"
+  "summary": "旅创人才服务接续联调样例",
+  "person_id": "sojourn_creator_service-001",
+  "payload": {
+    "person_id": "sojourn_creator_service-001",
+    "skills": ["民宿运营"],
+    "residence_stage": "INTENDED"
+  }
 }

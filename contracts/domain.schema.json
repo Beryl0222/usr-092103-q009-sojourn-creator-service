@@ -1,6 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "旅创人才服务接续领域事件",
+  "description": "连续案件系统的公共事件外壳：人才档案、技能意向、居住阶段、项目提案、政策资格、材料声明、用途授权、部门转介、办事项与办理结果在同一信封下衔接。规则匹配只产出可能适用的提示，贷款、注册、项目遴选的决定权属于各责任机构。",
   "type": "object",
   "required": [
     "event_id",
@@ -17,23 +18,10 @@
       "minLength": 1
     },
     "event_type": {
-      "type": "string",
-      "enum": [
-        "PROFILE_REGISTERED",
-        "SERVICE_MATCHED",
-        "REFERRAL_ACCEPTED",
-        "DOCUMENT_EXPIRED",
-        "CASE_COMPLETED"
-      ]
+      "$ref": "#/$defs/event_type"
     },
     "aggregate_type": {
-      "type": "string",
-      "enum": [
-        "talent_profile",
-        "service_case",
-        "document_assertion",
-        "agency_receipt"
-      ]
+      "$ref": "#/$defs/aggregate_type"
     },
     "aggregate_id": {
       "type": "string",
@@ -45,12 +33,648 @@
     },
     "version": {
       "type": "integer",
-      "minimum": 1
+      "minimum": 1,
+      "description": "同一 aggregate_id 内严格递增的事件版本"
     },
     "summary": {
       "type": "string",
       "minLength": 1
+    },
+    "case_id": {
+      "type": "string",
+      "description": "连续案件标识；凡属于某一案件的事件都应携带，便于串联各窗口"
+    },
+    "person_id": {
+      "type": "string",
+      "description": "申请人（旅居创业者）统一身份标识"
+    },
+    "payload": {
+      "type": "object",
+      "description": "按 event_type 区分的业务字段，见 allOf 中的条件约束"
     }
   },
-  "additionalProperties": true
+  "additionalProperties": true,
+  "$defs": {
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "PROFILE_REGISTERED",
+        "SKILLS_INTENT_UPDATED",
+        "RESIDENCE_STAGE_CHANGED",
+        "CASE_OPENED",
+        "PROJECT_PROPOSAL_SUBMITTED",
+        "POLICY_HINTED",
+        "ELIGIBILITY_CONFIRMED",
+        "ELIGIBILITY_DENIED",
+        "ELIGIBILITY_EXPIRED",
+        "ELIGIBILITY_REVOKED",
+        "PROJECT_SELECTION_DECIDED",
+        "DOCUMENT_DECLARED",
+        "CONSENT_GRANTED",
+        "CONSENT_REVOKED",
+        "DOCUMENT_SHARED",
+        "DOCUMENT_EXPIRED",
+        "DOCUMENT_USE_BLOCKED",
+        "REFERRAL_ISSUED",
+        "REFERRAL_ACCEPTED",
+        "REFERRAL_DECLINED",
+        "REFERRAL_RETURNED",
+        "REFERRAL_CLOSED_LOOP",
+        "TASK_ASSIGNED",
+        "TASK_STAGE_CHANGED",
+        "TASK_SLA_BREACHED",
+        "SUPPLEMENT_REQUESTED",
+        "SUPPLEMENT_RECEIVED",
+        "REGISTRATION_DECIDED",
+        "LOAN_DECIDED",
+        "LEGAL_OPINION_ISSUED",
+        "CASE_COMPLETED",
+        "PROFILING_CONSENT_UPDATED",
+        "CASE_EXPORT_REQUESTED",
+        "CASE_EXPORTED"
+      ]
+    },
+    "aggregate_type": {
+      "type": "string",
+      "enum": [
+        "talent_profile",
+        "service_case",
+        "project_proposal",
+        "policy_eligibility",
+        "document_assertion",
+        "consent_grant",
+        "agency_receipt",
+        "service_task",
+        "case_transfer"
+      ]
+    },
+    "service_item": {
+      "type": "string",
+      "description": "连续案件中的服务事项",
+      "enum": [
+        "TALENT_REGISTRATION",
+        "PROJECT_COLLABORATION",
+        "BUSINESS_REGISTRATION",
+        "SOCIAL_INSURANCE",
+        "EMPLOYMENT",
+        "LOAN",
+        "LEGAL_CONSULTATION"
+      ]
+    },
+    "document_purpose": {
+      "type": "string",
+      "description": "证明材料的授权用途；同一证明按用途授权复用，不得超目的使用",
+      "enum": [
+        "PROJECT_SELECTION",
+        "BUSINESS_REGISTRATION",
+        "SOCIAL_INSURANCE",
+        "EMPLOYMENT",
+        "LOAN",
+        "LEGAL_AID",
+        "TALENT_AUDIT",
+        "INVESTMENT_SCREENING"
+      ]
+    },
+    "residence_stage": {
+      "type": "string",
+      "enum": [
+        "INTENDED",
+        "TEMP_RESIDENCE",
+        "RESIDING",
+        "RELOCATING",
+        "DEPARTED"
+      ]
+    },
+    "task_status": {
+      "type": "string",
+      "enum": [
+        "PENDING",
+        "IN_PROGRESS",
+        "AWAITING_SUPPLEMENT",
+        "SUSPENDED",
+        "DONE",
+        "REJECTED"
+      ]
+    },
+    "decision": {
+      "type": "string",
+      "enum": [
+        "APPROVED",
+        "GRANTED",
+        "SELECTED",
+        "REJECTED",
+        "NOT_SELECTED"
+      ]
+    },
+    "block_reason": {
+      "type": "string",
+      "enum": [
+        "EXPIRED",
+        "REVOKED",
+        "NO_CONSENT",
+        "PURPOSE_NOT_COVERED"
+      ]
+    },
+    "agency": {
+      "type": "string",
+      "description": "责任机构代码，如 CULTURE_TOURISM、MARKET_REGULATION、HUMAN_RESOURCES、BANK、LEGAL_AID_CENTER"
+    },
+    "person_ref": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "event_type": { "const": "PROFILE_REGISTERED" } }, "required": ["event_type"] },
+      "then": {
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["person_id", "residence_stage"],
+          "properties": {
+            "person_id": { "$ref": "#/$defs/person_ref" },
+            "skills": { "type": "array", "items": { "type": "string" } },
+            "residence_stage": { "$ref": "#/$defs/residence_stage" }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "SKILLS_INTENT_UPDATED" } }, "required": ["event_type"] },
+      "then": {
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["skills", "intent"],
+          "properties": {
+            "skills": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+            "intent": { "type": "string", "minLength": 1 }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "RESIDENCE_STAGE_CHANGED" } }, "required": ["event_type"] },
+      "then": {
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["from_stage", "to_stage"],
+          "properties": {
+            "from_stage": { "$ref": "#/$defs/residence_stage" },
+            "to_stage": { "$ref": "#/$defs/residence_stage" },
+            "city": { "type": "string" }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "CASE_OPENED" } }, "required": ["event_type"] },
+      "then": {
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["person_id", "service_items"],
+          "properties": {
+            "person_id": { "$ref": "#/$defs/person_ref" },
+            "service_items": { "type": "array", "items": { "$ref": "#/$defs/service_item" }, "minItems": 1 },
+            "opened_by": { "$ref": "#/$defs/agency" }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "PROJECT_PROPOSAL_SUBMITTED" } }, "required": ["event_type"] },
+      "then": {
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["proposal_id", "title"],
+          "properties": {
+            "proposal_id": { "type": "string", "minLength": 1 },
+            "title": { "type": "string", "minLength": 1 },
+            "outline": { "type": "string" }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "POLICY_HINTED" } }, "required": ["event_type"] },
+      "then": {
+        "description": "规则匹配只提示可能适用的政策；payload 不得携带批准结论，资格以 ELIGIBILITY_CONFIRMED 为准",
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["policy_code", "matched_basis"],
+          "properties": {
+            "policy_code": { "type": "string", "minLength": 1 },
+            "matched_basis": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+            "suggested_service_items": { "type": "array", "items": { "$ref": "#/$defs/service_item" } },
+            "note": { "type": "string" }
+          },
+          "not": {
+            "anyOf": [
+              { "required": ["decision"] },
+              { "required": ["approved"] },
+              { "required": ["decided_by"] }
+            ]
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "ELIGIBILITY_CONFIRMED" } }, "required": ["event_type"] },
+      "then": {
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["policy_code", "agency", "valid_until"],
+          "properties": {
+            "policy_code": { "type": "string" },
+            "agency": { "$ref": "#/$defs/agency" },
+            "valid_from": { "type": "string", "format": "date-time" },
+            "valid_until": { "type": "string", "format": "date-time" }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "ELIGIBILITY_DENIED" } }, "required": ["event_type"] },
+      "then": {
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["policy_code", "agency", "reason"],
+          "properties": {
+            "policy_code": { "type": "string" },
+            "agency": { "$ref": "#/$defs/agency" },
+            "reason": { "type": "string" }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "ELIGIBILITY_EXPIRED" } }, "required": ["event_type"] },
+      "then": {
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["policy_code"],
+          "properties": { "policy_code": { "type": "string" } }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "ELIGIBILITY_REVOKED" } }, "required": ["event_type"] },
+      "then": {
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["policy_code", "agency", "reason"],
+          "properties": {
+            "policy_code": { "type": "string" },
+            "agency": { "$ref": "#/$defs/agency" },
+            "reason": { "type": "string" }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "PROJECT_SELECTION_DECIDED" } }, "required": ["event_type"] },
+      "then": {
+        "description": "项目遴选由责任机构决定，而非规则匹配自动入选",
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["proposal_id", "agency", "decision"],
+          "properties": {
+            "proposal_id": { "type": "string" },
+            "agency": { "$ref": "#/$defs/agency" },
+            "decision": { "enum": ["SELECTED", "NOT_SELECTED"] },
+            "reason": { "type": "string" }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "DOCUMENT_DECLARED" } }, "required": ["event_type"] },
+      "then": {
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["document_id", "doc_type", "issued_by"],
+          "properties": {
+            "document_id": { "type": "string", "minLength": 1 },
+            "doc_type": { "type": "string" },
+            "issued_by": { "type": "string" },
+            "valid_from": { "type": "string", "format": "date-time" },
+            "valid_until": { "type": "string", "format": "date-time" },
+            "declarations": { "type": "array", "items": { "type": "string" } }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "CONSENT_GRANTED" } }, "required": ["event_type"] },
+      "then": {
+        "description": "申请人按用途授予证明复用权；授权可有期限，撤回以 CONSENT_REVOKED 为准",
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["consent_id", "document_id", "purposes"],
+          "properties": {
+            "consent_id": { "type": "string" },
+            "document_id": { "type": "string" },
+            "purposes": { "type": "array", "items": { "$ref": "#/$defs/document_purpose" }, "minItems": 1 },
+            "granted_at": { "type": "string", "format": "date-time" },
+            "expires_at": { "type": "string", "format": "date-time" }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "CONSENT_REVOKED" } }, "required": ["event_type"] },
+      "then": {
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["consent_id", "document_id"],
+          "properties": {
+            "consent_id": { "type": "string" },
+            "document_id": { "type": "string" }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "DOCUMENT_SHARED" } }, "required": ["event_type"] },
+      "then": {
+        "description": "证明在授权用途内被复用到某办事项；必须有有效授权且证明未过期，否则应产生 DOCUMENT_USE_BLOCKED",
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["document_id", "purpose", "target_agency"],
+          "properties": {
+            "document_id": { "type": "string" },
+            "consent_id": { "type": "string" },
+            "purpose": { "$ref": "#/$defs/document_purpose" },
+            "target_agency": { "$ref": "#/$defs/agency" },
+            "task_id": { "type": "string" }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "DOCUMENT_EXPIRED" } }, "required": ["event_type"] },
+      "then": {
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["document_id"],
+          "properties": { "document_id": { "type": "string" } }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "DOCUMENT_USE_BLOCKED" } }, "required": ["event_type"] },
+      "then": {
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["document_id", "reason"],
+          "properties": {
+            "document_id": { "type": "string" },
+            "attempted_task_id": { "type": "string" },
+            "attempted_purpose": { "$ref": "#/$defs/document_purpose" },
+            "reason": { "$ref": "#/$defs/block_reason" }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "REFERRAL_ISSUED" } }, "required": ["event_type"] },
+      "then": {
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["referral_id", "from_agency", "to_agency", "service_item"],
+          "properties": {
+            "referral_id": { "type": "string" },
+            "from_agency": { "$ref": "#/$defs/agency" },
+            "to_agency": { "$ref": "#/$defs/agency" },
+            "service_item": { "$ref": "#/$defs/service_item" },
+            "reason": { "type": "string" },
+            "expected_response_days": { "type": "integer", "minimum": 1 }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "REFERRAL_ACCEPTED" } }, "required": ["event_type"] },
+      "then": {
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["referral_id"],
+          "properties": { "referral_id": { "type": "string" } }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "REFERRAL_DECLINED" } }, "required": ["event_type"] },
+      "then": {
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["referral_id", "reason"],
+          "properties": {
+            "referral_id": { "type": "string" },
+            "reason": { "type": "string" }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "REFERRAL_RETURNED" } }, "required": ["event_type"] },
+      "then": {
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["referral_id", "missing_items"],
+          "properties": {
+            "referral_id": { "type": "string" },
+            "missing_items": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "REFERRAL_CLOSED_LOOP" } }, "required": ["event_type"] },
+      "then": {
+        "description": "回执回到发出转介的主理窗口，转介闭环",
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["referral_id", "result"],
+          "properties": {
+            "referral_id": { "type": "string" },
+            "result": { "type": "string" }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "TASK_ASSIGNED" } }, "required": ["event_type"] },
+      "then": {
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["task_id", "service_item", "agency", "sla_due_at"],
+          "properties": {
+            "task_id": { "type": "string" },
+            "service_item": { "$ref": "#/$defs/service_item" },
+            "agency": { "$ref": "#/$defs/agency" },
+            "assignee": { "type": "string" },
+            "sla_due_at": { "type": "string", "format": "date-time" },
+            "referral_id": { "type": "string" }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "TASK_STAGE_CHANGED" } }, "required": ["event_type"] },
+      "then": {
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["task_id", "status"],
+          "properties": {
+            "task_id": { "type": "string" },
+            "status": { "$ref": "#/$defs/task_status" },
+            "note": { "type": "string" },
+            "missing_items": { "type": "array", "items": { "type": "string" } }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "TASK_SLA_BREACHED" } }, "required": ["event_type"] },
+      "then": {
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["task_id", "sla_due_at"],
+          "properties": {
+            "task_id": { "type": "string" },
+            "sla_due_at": { "type": "string", "format": "date-time" }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "SUPPLEMENT_REQUESTED" } }, "required": ["event_type"] },
+      "then": {
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["task_id", "missing_items"],
+          "properties": {
+            "task_id": { "type": "string" },
+            "missing_items": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+            "due_at": { "type": "string", "format": "date-time" }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "SUPPLEMENT_RECEIVED" } }, "required": ["event_type"] },
+      "then": {
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["task_id", "items"],
+          "properties": {
+            "task_id": { "type": "string" },
+            "items": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "REGISTRATION_DECIDED" } }, "required": ["event_type"] },
+      "then": {
+        "description": "经营主体注册由市场监管等责任机构决定",
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["agency", "decision"],
+          "properties": {
+            "agency": { "$ref": "#/$defs/agency" },
+            "decision": { "enum": ["GRANTED", "REJECTED"] },
+            "entity_name": { "type": "string" },
+            "registration_no": { "type": "string" },
+            "reason": { "type": "string" }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "LOAN_DECIDED" } }, "required": ["event_type"] },
+      "then": {
+        "description": "贷款由银行等责任机构决定，政策提示不构成授信",
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["agency", "decision"],
+          "properties": {
+            "agency": { "$ref": "#/$defs/agency" },
+            "decision": { "enum": ["APPROVED", "REJECTED"] },
+            "amount": { "type": "number", "minimum": 0 },
+            "reason": { "type": "string" }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "LEGAL_OPINION_ISSUED" } }, "required": ["event_type"] },
+      "then": {
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["opinion_id", "agency"],
+          "properties": {
+            "opinion_id": { "type": "string" },
+            "agency": { "$ref": "#/$defs/agency" },
+            "summary": { "type": "string" }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "CASE_COMPLETED" } }, "required": ["event_type"] },
+      "then": {
+        "properties": { "payload": {
+          "properties": {
+            "outcomes": { "type": "array", "items": { "type": "string" } }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "PROFILING_CONSENT_UPDATED" } }, "required": ["event_type"] },
+      "then": {
+        "description": "未经本人同意，个人画像不得转作招商筛选",
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["investment_screening_allowed"],
+          "properties": {
+            "investment_screening_allowed": { "type": "boolean" },
+            "note": { "type": "string" }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "CASE_EXPORT_REQUESTED" } }, "required": ["event_type"] },
+      "then": {
+        "description": "申请人迁往另一城市时本人勾选随案资料；导出不得超出勾选范围",
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["destination_city", "selected_aggregates"],
+          "properties": {
+            "destination_city": { "type": "string", "minLength": 1 },
+            "selected_aggregates": { "type": "array", "items": { "$ref": "#/$defs/aggregate_type" }, "minItems": 1 },
+            "purposes": { "type": "array", "items": { "$ref": "#/$defs/document_purpose" } }
+          }
+        } }
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "CASE_EXPORTED" } }, "required": ["event_type"] },
+      "then": {
+        "required": ["payload"],
+        "properties": { "payload": {
+          "required": ["export_id", "destination_city", "included_aggregates", "audit_retention_until"],
+          "properties": {
+            "export_id": { "type": "string" },
+            "destination_city": { "type": "string" },
+            "included_aggregates": { "type": "array", "items": { "$ref": "#/$defs/aggregate_type" }, "minItems": 1 },
+            "excluded_aggregates": { "type": "array", "items": { "$ref": "#/$defs/aggregate_type" } },
+            "audit_retention_until": { "type": "string", "format": "date-time" }
+          }
+        } }
+      }
+    }
+  ]
 }
